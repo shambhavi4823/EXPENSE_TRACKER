@@ -4,7 +4,7 @@ public class  {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         
-        UserDAO userDAO = new UserDAO();
+        userDAO userDAO = new userDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
         ExpenseDAO expenseDAO = new ExpenseDAO();
 
@@ -38,7 +38,7 @@ public class  {
                     String pass = sc.nextLine();
                     System.out.print("Enter Role: ");
                     String role = sc.nextLine();
-                    userDAO.registerUser(name, email, pass, role);
+                    userDAO.registeruser(name, email, pass, role);
                     break;
 
                 case 2:
@@ -47,7 +47,7 @@ public class  {
                     String lEmail = sc.nextLine();
                     System.out.print("Enter Password: ");
                     String lPass = sc.nextLine();
-                    userAuthenticated = userDAO.loginUser(lEmail, lPass); // Status update hoga
+                    userAuthenticated = userDAO.loginuser(lEmail, lPass); // Status update hoga
                     break;
 
                 case 3:

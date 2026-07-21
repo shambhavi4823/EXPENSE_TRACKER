@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpenseTracker - Expense History</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 260px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 0 25px 20px 25px;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar .logo span {
+            color: #3498db;
+        }
+        
+        .sidebar a {
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 12px 25px;
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background-color: #34495e;
+            border-left: 4px solid #3498db;
+        }
+        
+        .sidebar .logout {
+            margin-top: auto;
+            border-top: 1px solid #34495e;
+            padding-top: 15px;
+        }
+        
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        
+        .data-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            overflow-x: auto;
+        }
+        
+        .expense-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        
+        .expense-table th {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            padding: 14px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 2px solid #eaeded;
+        }
+        
+        .expense-table td {
+            padding: 16px 15px;
+            color: #2c3e50;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f2f6;
+        }
+        
+        .expense-table tr:hover {
+            background-color: #fafbfc;
+        }
+        
+        .badge-category {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            margin-right: 5px;
+            display: inline-block;
+        }
+        
+        .btn-edit {
+            background-color: #e8f4fd;
+            color: #3498db;
+        }
+        
+        .btn-edit:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: #fdedec;
+            color: #e74c3c;
+        }
+        
+        .btn-delete:hover {
+            background-color: #e74c3c;
+            color: white;
+        }
+        /* Modal Box Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #eaeded;
+            border-radius: 6px;
+            outline: none;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-cancel {
+            background-color: #bdc3c7;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">Expense<span>Tracker</span></div>
+        <a href="user_dashboard.html">📊 Dashboard</a>
+        <a href="add_expense.html">➕ Add Expense</a>
+        <a href="expense_history.html" class="active">📋 My Expenses</a>
+        <a href="search_expenses.html">🔍 Search Filters</a>
+        <a href="settings.html">⚙️ Budget & Password</a>
+        <a href="index.html" class="logout">👋 Logout</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>My Expense Log</h1>
+            <p style="color: #7f8c8d; font-size: 14px; margin-top: 5px;">Manage, review, edit or delete your recorded financial transactions.</p>
+        </div>
+
+        <div class="data-card">
+            <table class="expense-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Category</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Date Added</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="expenseTableBody">
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #7f8c8d;">Loading system record history...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Edit Expense Modal Dialog Window -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">✏️ Update Expense Record</div>
+            <form id="editForm">
+                <input type="hidden" id="edit_id">
+                <div class="form-group">
+                    <label for="edit_type">Category</label>
+                    <select id="edit_type" required>
+<option value="Food">Food</option>
+<option value="Travel">Travel</option>
+<option value="Shopping">Shopping</option>
+<option value="Entertainment">Entertainment</option>
+<option value="Others">Others</option>
+</select>
+                </div>
+                <div class="form-group">
+                    <label for="edit_name">Item Name</label>
+                    <input type="text" id="edit_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_qty">Quantity</label>
+                    <input type="number" id="edit_qty" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_price">Price (₹)</label>
+                    <input type="number" id="edit_price" min="0" step="0.01" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-action btn-cancel" onclick="closeModal()">Close</button>
+                    <button type="submit" class="btn-action btn-edit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            alert("⚠️ Invalid Session Context. Redirecting to Login...");
+            window.location.href = "index.html";
+        }
+
+        document.querySelector(".logout").addEventListener("click", () => {
+            localStorage.clear();
+        });
+
+        const badgeColors = {
+            'Food': {
+                bg: '#ffeaa7',
+                text: '#d63031'
+            },
+            'Travel': {
+                bg: '#74b9ff',
+                text: '#0984e3'
+            },
+            'Shopping': {
+                bg: '#fab1a0',
+                text: '#e17055'
+            },
+            'Entertainment': {
+                bg: '#dff9fb',
+                text: '#130cb7'
+            },
+            'Others': {
+                bg: '#b2bec3',
+                text: '#2d3436'
+            }
+        };
+
+        async function loadExpenses() {
+            try {
+                const response = await fetch('http://localhost:8080/api/get-expenses', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `userId=${userId}`
+                });
+                const data = await response.json();
+                const tbody = document.getElementById("expenseTableBody");
+                tbody.innerHTML = "";
+
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #7f8c8d;">No expenses posted yet.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    const design = badgeColors[item.type] || badgeColors['Others'];
+                    const row = `
+<tr>
+<td>#${item.id}</td>
+<td><span class="badge-category" style="background-color: ${design.bg}; color: ${design.text};">${item.type}</span></td>
+<td><strong>${item.name}</strong></td>
+<td>${item.qty}</td>
+<td>₹${parseFloat(item.price).toFixed(2)}</td>
+<td>${item.date}</td>
+<td style="text-align: center;">
+<button class="btn-action btn-edit" onclick="openEditModal(${item.id}, '${item.type}', '${item.name.replace(/'/g, "\\'")}', ${item.qty}, ${item.price})">✏️ Edit</button>
+<button class="btn-action btn-delete" onclick="deleteExpense(${item.id})">🗑️ Delete</button>
+</td>
+</tr>
+`;
+                    tbody.innerHTML += row;
+                });
+            } catch (err) {
+                document.getElementById("expenseTableBody").innerHTML = `<tr><td colspan="7" style="text-align: center; color: #e74c3c;">Engine synchronization fault.</td></tr>`;
+            }
+        }
+
+        async function deleteExpense(expenseId) {
+            if (!confirm("Are you sure you want to completely discard this transaction record?")) return;
+            try {
+                const response = await fetch('http://localhost:8080/api/delete-expense', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `userId=${userId}&expenseId=${expenseId}`
+                });
+                const data = await response.json();
+                if (data.status === "success") {
+                    loadExpenses();
+                } else {
+                    alert("❌ Operation rejected by server.");
+                }
+            } catch (err) {
+                alert("❌ Backend connectivity exception occurred.");
+            }
+        }
+
+        function openEditModal(id, type, name, qty, price) {
+            document.getElementById("edit_id").value = id;
+            document.getElementById("edit_type").value = type;
+            document.getElementById("edit_name").value = name;
+            document.getElementById("edit_qty").value = qty;
+            document.getElementById("edit_price").value = price;
+            document.getElementById("editModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("editModal").style.display = "none";
+        }
+
+        document.getElementById("editForm").addEventListener("submit", async(e) => {
+            e.preventDefault();
+            const id = document.getElementById("edit_id").value;
+            const type = document.getElementById("edit_type").value;
+            const name = document.getElementById("edit_name").value;
+            const qty = document.getElementById("edit_qty").value;
+            const price = document.getElementById("edit_price").value;
+
+            try {
+                const response = await fetch('http://localhost:8080/api/edit-expense', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `userId=${userId}&expenseId=${id}&item_type=${encodeURIComponent(type)}&item_name=${encodeURIComponent(name)}&quantity=${qty}&price=${price}`
+                });
+                const data = await response.json();
+                if (data.status === "success") {
+                    closeModal();
+                    loadExpenses();
+                } else {
+                    alert("❌ Update failure: " + data.message);
+                }
+            } catch (err) {
+                alert("❌ Database structural sync timeout.");
+            }
+        });
+
+        window.onload = loadExpenses;
+    </script>
+</body>
+
+</html>

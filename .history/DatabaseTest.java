@@ -27,4 +27,3 @@ public class DatabaseTest {
         throw new UnsupportedOperationException("Unimplemented method 'getConnection'");
     }
 }
-

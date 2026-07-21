@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpenseTracker - User Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 260px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 0 25px 20px 25px;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar .logo span {
+            color: #3498db;
+        }
+        
+        .sidebar a {
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 12px 25px;
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background-color: #34495e;
+            border-left: 4px solid #3498db;
+        }
+        
+        .sidebar .logout {
+            margin-top: auto;
+            border-top: 1px solid #34495e;
+            padding-top: 15px;
+        }
+        
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        
+        .header .user-badge {
+            background-color: #e8f4fd;
+            color: #3498db;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card .card-title {
+            color: #7f8c8d;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        
+        .card .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .card .card-value.spent {
+            color: #e74c3c;
+        }
+        
+        .card .card-value.budget {
+            color: #2ecc71;
+        }
+        
+        .budget-progress-box {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            margin-bottom: 30px;
+        }
+        
+        .budget-progress-box h3 {
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background-color: #f1f2f6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #2ecc71;
+            border-radius: 6px;
+            transition: width 0.6s ease;
+        }
+        
+        .data-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+        
+        .data-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .expense-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        
+        .expense-table th {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            padding: 12px 15px;
+            font-size: 14px;
+            border-bottom: 1px solid #eaeded;
+        }
+        
+        .expense-table td {
+            padding: 14px 15px;
+            color: #2c3e50;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f2f6;
+        }
+        
+        .badge-category {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo"> Expense<span>Tracker</span></div>
+        <a href="user_dashboard.html" class="active">📊 Dashboard</a>
+        <a href="add_expense.html">➕ Add Expense</a>
+        <a href="expense_history.html">📋 My Expenses</a>
+        <a href="search_expenses.html">🔍 Search Expense</a>
+        <a href="settings.html">⚙️ Budget & Password</a>
+        <a href="index.html" class="logout">👋 Logout</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1>Welcome Back!</h1>
+                <p style="color: #7f8c8d; font-size: 14px; margin-top: 5px;">Synchronizing user balance sheets...</p>
+            </div>
+            <div class="user-badge">👤 User</div>
+        </div>
+
+        <div class="cards-grid">
+            <div class="card">
+                <span class="card-title">Monthly Budget Limit</span>
+                <span class="card-value budget">₹0.00</span>
+            </div>
+            <div class="card">
+                <span class="card-title">Total Money Spent</span>
+                <span class="card-value spent">₹0.00</span>
+            </div>
+            <div class="card">
+                <span class="card-title">Remaining Balance</span>
+                <span class="card-value" style="color: #3498db;">₹0.00</span>
+            </div>
+        </div>
+
+        <div class="budget-progress-box">
+            <h3>
+                <span>Budget Usage Meter</span>
+                <span>0% Consumed</span>
+            </h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+
+        <div class="data-section">
+            <h3>Recent Expense Entries</h3>
+            <table class="expense-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type/Category</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Date Added</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="6" style="text-align:center;">Loading logs from database cluster...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const userId = localStorage.getItem("userId");
+        const userEmail = localStorage.getItem("userEmail") || "User";
+
+        if (!userId) {
+            alert("⚠️ Session missing! Redirecting to login context...");
+            window.location.href = "login.html";
+        }
+
+        document.querySelector(".logout").addEventListener("click", () => {
+            localStorage.clear();
+        });
+
+        async function renderDashboardMetrics() {
+            try {
+                const response = await fetch('http://localhost:8080/api/user-dashboard', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `userId=${userId}`
+                });
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    document.querySelector(".header h1").innerText = `Welcome Back!`;
+                    document.querySelector(".header p").innerText = `Connected Identity: ${userEmail}`;
+
+                    document.querySelector(".card-value.budget").innerText = `₹${result.budget.toFixed(2)}`;
+                    document.querySelector(".card-value.spent").innerText = `₹${result.spent.toFixed(2)}`;
+
+                    const balanceElement = document.querySelectorAll(".card .card-value")[2];
+                    balanceElement.innerText = `₹${result.remaining.toFixed(2)}`;
+                    if (result.remaining < 0) balanceElement.style.color = "#e74c3c";
+
+                    const progressPercent = result.percent.toFixed(0);
+                    const progressBar = document.querySelector(".progress-bar");
+                    const progressLabel = document.querySelector(".budget-progress-box h3 span:last-child");
+
+                    progressBar.style.width = `${progressPercent}%`;
+                    progressLabel.innerText = `${progressPercent}% Consumed`;
+
+                    if (result.percent >= 90) {
+                        progressBar.style.backgroundColor = "#e74c3c";
+                        progressLabel.style.color = "#e74c3c";
+                    } else if (result.percent >= 70) {
+                        progressBar.style.backgroundColor = "#f39c12";
+                        progressLabel.style.color = "#f39c12";
+                    } else {
+                        progressBar.style.backgroundColor = "#2ecc71";
+                        progressBar.style.backgroundColor = "#2ecc71";
+                    }
+
+                    const tbody = document.querySelector(".expense-table tbody");
+                    tbody.innerHTML = "";
+
+                    if (result.expenses.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#7f8c8d;">No expenditures logged yet!</td></tr>`;
+                        return;
+                    }
+
+                    result.expenses.forEach(item => {
+                        let badgeColor = "#f1f2f6";
+                        let textColor = "#2c3e50";
+                        if (item.type.toLowerCase() === 'food') {
+                            badgeColor = '#ffeaa7';
+                            textColor = '#d63031';
+                        } else if (item.type.toLowerCase() === 'travel') {
+                            badgeColor = '#74b9ff';
+                            textColor = '#0984e3';
+                        } else if (item.type.toLowerCase() === 'shopping') {
+                            badgeColor = '#fab1a0';
+                            textColor = '#e17055';
+                        } else if (item.type.toLowerCase() === 'bills') {
+                            badgeColor = '#a29bfe';
+                            textColor = '#6c5ce7';
+                        }
+
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${item.id}</td>
+                                <td><span class="badge-category" style="background-color: ${badgeColor}; color: ${textColor};">${item.type}</span></td>
+                                <td>${item.name}</td>
+                                <td>${item.qty}</td>
+                                <td>₹${item.price.toFixed(2)}</td>
+                                <td>${item.date.split(" ")[0]}</td>
+                            </tr>
+                        `;
+                    });
+                }
+            } catch (err) {
+                console.error("Connection matrix error:", err);
+            }
+        }
+        renderDashboardMetrics();
+    </script>
+</body>
+
+</html>

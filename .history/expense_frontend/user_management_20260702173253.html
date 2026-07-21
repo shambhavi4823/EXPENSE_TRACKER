@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WalletWise - User Management</title>
+    <style>
+        /* --- Reset & Base Styles --- */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            min-height: 100vh;
+        }
+        /* --- Admin Sidebar Navigation (Dark Theme) --- */
+        
+        .sidebar {
+            width: 280px;
+            background-color: #1a252f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 0 25px 20px 25px;
+            border-bottom: 1px solid #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar .logo span {
+            color: #e74c3c;
+        }
+        
+        .sidebar a {
+            color: #95a5a6;
+            text-decoration: none;
+            padding: 14px 25px;
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background-color: #2c3e50;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .sidebar .logout {
+            margin-top: auto;
+            border-top: 1px solid #2c3e50;
+            padding-top: 15px;
+        }
+        /* --- Main Content Area --- */
+        
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .header {
+            margin-bottom: 35px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        /* --- Data Section --- */
+        
+        .data-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+        
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        
+        .user-table th {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            padding: 14px 15px;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 2px solid #eaeded;
+        }
+        
+        .user-table td {
+            padding: 16px 15px;
+            color: #2c3e50;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f2f6;
+        }
+        
+        .user-table tr:hover {
+            background-color: #fafbfc;
+        }
+        /* --- Role Badges --- */
+        
+        .badge-role {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .role-admin {
+            background-color: #fdedec;
+            color: #e74c3c;
+        }
+        
+        .role-user {
+            background-color: #e8f4fd;
+            color: #3498db;
+        }
+        /* --- Delete Action Button --- */
+        
+        .btn-delete-user {
+            background-color: #fdedec;
+            color: #e74c3c;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-delete-user:hover {
+            background-color: #e74c3c;
+            color: white;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">👑 Wallet<span>Wise</span></div>
+        <a href="admin_dashboard.html">📊 Admin Analytics</a>
+        <a href="user_management.html" class="active">👥 User Management</a>
+        <a href="master_ledger.html">📜 Master Ledger</a>
+        <a href="index.html" class="logout">👋 System Logout</a>
+    </div>
+
+    <div class="main-content">
+
+        <div class="header">
+            <h1>User Account Directory</h1>
+            <p style="color: #7f8c8d; font-size: 14px; margin-top: 5px;">View all registered users and administrators. Revoke access if necessary.</p>
+        </div>
+
+        <div class="data-card">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>System Role</th>
+                        <th style="text-align: center;">Access Control</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Aman Sharma</strong></td>
+                        <td>aman@gmail.com</td>
+                        <td><span class="badge-role role-user">User</span></td>
+                        <td style="text-align: center;">
+                            <button class="btn-delete-user">🛑 Delete User</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Rahul Verma</strong></td>
+                        <td>rahul@gmail.com</td>
+                        <td><span class="badge-role role-user">User</span></td>
+                        <td style="text-align: center;">
+                            <button class="btn-delete-user">🛑 Delete User</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Admin Root</strong></td>
+                        <td>admin@walletwise.com</td>
+                        <td><span class="badge-role role-admin">Admin</span></td>
+                        <td style="text-align: center;">
+                            <span style="color: #95a5a6; font-size: 13px; font-style: italic;">Protected</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Priya Patel</strong></td>
+                        <td>priya@gmail.com</td>
+                        <td><span class="badge-role role-user">User</span></td>
+                        <td style="text-align: center;">
+                            <button class="btn-delete-user">🛑 Delete User</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

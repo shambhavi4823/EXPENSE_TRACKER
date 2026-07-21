@@ -8,7 +8,7 @@ public class DatabaseTest {
         String url = "jdbc:mysql://localhost:3306/expense_tracker_db";
         String user = "root";
         String password = "shambhavisinha4823";
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(url, user, password);

@@ -1,7 +1,7 @@
 import java.sql.*;
 
 public class ExpenseDAO {
-    
+
     public void addExpense(String itemName, int qty, double price) {
         String query = "INSERT INTO expenses (item_name, quantity, price) VALUES (?, ?, ?)";
 
@@ -10,7 +10,7 @@ public class ExpenseDAO {
         String password = "shambhavisinha4823";
 
         try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
 
             pstmt.setString(1, itemName);
             pstmt.setInt(2, qty);

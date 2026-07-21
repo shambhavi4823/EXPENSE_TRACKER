@@ -3,8 +3,8 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        UserDAO userDAO = new UserDAO();
+
+        userDAO userDAO = new userDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
         ExpenseDAO expenseDAO = new ExpenseDAO();
 
@@ -25,11 +25,14 @@ public class Main {
             System.out.print("Choose an option: ");
 
             int choice = sc.nextInt();
-            sc.nextLine(); 
+            sc.nextLine();
 
             switch (choice) {
                 case 1:
-                    if(userAuthenticated) { System.out.println("Already logged in!"); break; }
+                    if (userAuthenticated) {
+                        System.out.println("Already logged in!");
+                        break;
+                    }
                     System.out.print("Enter Name: ");
                     String name = sc.nextLine();
                     System.out.print("Enter Email: ");
@@ -38,16 +41,19 @@ public class Main {
                     String pass = sc.nextLine();
                     System.out.print("Enter Role: ");
                     String role = sc.nextLine();
-                    userDAO.registerUser(name, email, pass, role);
+                    userDAO.registeruser(name, email, pass, role);
                     break;
 
                 case 2:
-                    if(userAuthenticated) { System.out.println("Already logged in!"); break; }
+                    if (userAuthenticated) {
+                        System.out.println("Already logged in!");
+                        break;
+                    }
                     System.out.print("Enter Email: ");
                     String lEmail = sc.nextLine();
                     System.out.print("Enter Password: ");
                     String lPass = sc.nextLine();
-                    userAuthenticated = userDAO.loginUser(lEmail, lPass); // Status update hoga
+                    userAuthenticated = userDAO.loginuser(lEmail, lPass); // Status update hoga
                     break;
 
                 case 3:
@@ -85,7 +91,7 @@ public class Main {
                         System.out.println("Please Login first!");
                     }
                     break;
-                
+
                 case 6:
                     userAuthenticated = false;
                     System.out.println("Logged out successfully!");

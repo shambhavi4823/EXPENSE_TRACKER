@@ -1,16 +1,16 @@
 import java.sql.*;
 
-public class UserDAO {
+public class userDAO {
     // Ye method frontend se data lekar database me save karega
-    public void registerUser(String name, String email, String pass, String role) {
+    public void registeruser(String name, String email, String pass, String role) {
         String query = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
-        
+
         String url = "jdbc:mysql://localhost:3306/expense_tracker_db";
         String user = "root";
         String password = " "; // Apna password check kar lena
 
         try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = con.prepareStatement(query)) {
+                PreparedStatement pstmt = con.prepareStatement(query)) {
 
             // Value set kar rahe hain (?) ki jagah
             pstmt.setString(1, name);
@@ -20,7 +20,7 @@ public class UserDAO {
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("User successfully registered in Backend!");
+                System.out.println("user successfully registered in Backend!");
             }
 
         } catch (SQLException e) {

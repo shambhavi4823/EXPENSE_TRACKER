@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - Add Expense</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 260px;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 0 25px 20px 25px;
+            border-bottom: 1px solid #34495e;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar .logo span {
+            color: #3498db;
+        }
+        
+        .sidebar a {
+            color: #bdc3c7;
+            text-decoration: none;
+            padding: 12px 25px;
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background-color: #34495e;
+            border-left: 4px solid #3498db;
+        }
+        
+        .sidebar .logout {
+            margin-top: auto;
+            border-top: 1px solid #34495e;
+            padding-top: 15px;
+        }
+        
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        
+        .form-card {
+            background-color: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            max-width: 600px;
+        }
+        
+        .form-group {
+            margin-bottom: 22px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #eaeded;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #2c3e50;
+            background-color: #fcfcfc;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3498db;
+            background-color: white;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.15);
+        }
+        
+        .btn-submit {
+            background-color: #2ecc71;
+            color: white;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.2);
+        }
+        
+        .btn-submit:hover {
+            background-color: #27ae60;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">Expense<span>Wise</span></div>
+        <a href="user_dashboard.html">📊 Dashboard</a>
+        <a href="add_expense.html" class="active">➕ Add Expense</a>
+        <a href="expense_history.html">📋 My Expenses</a>
+        <a href="search_expenses.html">🔍 Search Filters</a>
+        <a href="settings.html">⚙️ Budget & Password</a>
+        <a href="index.html" class="logout">👋 Logout</a>
+    </div>
+
+    <div class="main-content">
+
+        <div class="header">
+            <h1>Record New Expense</h1>
+            <p style="color: #7f8c8d; font-size: 14px; margin-top: 5px;">Fill in the details to add this expense to your tracker.</p>
+        </div>
+
+        <div class="form-card">
+            <form id="expenseForm">
+
+                <div class="form-group">
+                    <label for="item_type">Expense Category (Item Type)</label>
+                    <select id="item_type" name="item_type" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Food">🍔 Food / Dining</option>
+                        <option value="Travel">🚗 Travel / Commute</option>
+                        <option value="Medical">💊 Medical / Health</option>
+                        <option value="Shopping">🛍️ Shopping / Clothes</option>
+                        <option value="Bills">🔌 Bills / Utilities</option>
+                        <option value="Others">📦 Others</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="item_name">Item Name / Description</label>
+                    <input type="text" id="item_name" name="item_name" placeholder="e.g., Grocery Shopping, Petrol, Medicine" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" name="quantity" min="1" placeholder="e.g., 1, 2, 5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Price (₹)</label>
+                    <input type="number" id="price" name="price" step="0.01" min="0" placeholder="0.00" required>
+                </div>
+
+                <button type="submit" class="btn-submit">💾 Save Expense</button>
+
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        const userId = localStorage.getItem("userId");
+        if (!userId) {
+            alert("⚠️ Unauthorized Access Detected! Logging out...");
+            window.location.href = "login.html";
+        }
+
+        document.querySelector(".logout").addEventListener("click", () => {
+            localStorage.clear();
+        });
+
+        document.getElementById("expenseForm").addEventListener("submit", async(e) => {
+            e.preventDefault();
+
+            const itemType = document.getElementById("item_type").value;
+            const itemName = document.getElementById("item_name").value;
+            const quantity = document.getElementById("quantity").value;
+            const price = document.getElementById("price").value;
+
+            try {
+                const response = await fetch('http://localhost:8080/api/add-expense', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `userId=${userId}&item_type=${encodeURIComponent(itemType)}&item_name=${encodeURIComponent(itemName)}&quantity=${quantity}&price=${price}`
+                });
+
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    alert("✅ Expense recorded successfully into database!");
+                    document.getElementById("expenseForm").reset(); // Clear input boxes
+                } else if (result.status === "limit_exceeded") {
+                    alert(`❌ Transaction Declined: Monthly Budget Exceeded!\n\nYour Current Limit: ₹${result.budget.toFixed(2)}\nTotal Amount Spent: ₹${result.spent.toFixed(2)}\n\nThis item cannot be bought.`);
+                } else {
+                    alert("❌ Failed to register item logs. Check database inputs.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("❌ Backend Pipeline Connection Interrupted.");
+            }
+        });
+    </script>
+</body>
+
+</html>

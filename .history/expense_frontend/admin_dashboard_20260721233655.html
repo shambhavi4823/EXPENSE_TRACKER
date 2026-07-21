@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpenseTracker - Admin Dashboard</title>
+    <style>
+        /* --- Reset & Base Styles --- */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            min-height: 100vh;
+        }
+        /* --- Admin Sidebar Navigation (Dark Theme) --- */
+        
+        .sidebar {
+            width: 280px;
+            background-color: #1a252f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            padding: 0 25px 20px 25px;
+            border-bottom: 1px solid #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar .logo span {
+            color: #e74c3c;
+        }
+        
+        .sidebar a {
+            color: #95a5a6;
+            text-decoration: none;
+            padding: 14px 25px;
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar a:hover,
+        .sidebar a.active {
+            color: white;
+            background-color: #2c3e50;
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .sidebar .logout {
+            margin-top: auto;
+            border-top: 1px solid #2c3e50;
+            padding-top: 15px;
+            cursor: pointer;
+        }
+        /* --- Main Content Area --- */
+        
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+        
+        .header .admin-badge {
+            background-color: #fdedec;
+            color: #e74c3c;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+        /* --- Admin KPI Cards Grid --- */
+        
+        .admin-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+        
+        .card {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            border-bottom: 4px solid #bdc3c7;
+        }
+        
+        .card.users-card {
+            border-bottom-color: #3498db;
+        }
+        
+        .card.expense-card {
+            border-bottom-color: #e74c3c;
+        }
+        
+        .card.system-card {
+            border-bottom-color: #2ecc71;
+        }
+        
+        .card .card-title {
+            color: #7f8c8d;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .card .card-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            display: block;
+        }
+        /* --- System Info Section --- */
+        
+        .system-status-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+        }
+        
+        .system-status-box h3 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f2f6;
+            font-size: 14px;
+            color: #34495e;
+        }
+        
+        .log-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-ok {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">EXPENSE <span>Tracker</span></div>
+        <a href="admin_dashboard.html" class="active">📊 Admin Analytics</a>
+        <a href="user_management.html">👥 User Management</a>
+        <a href="master_ledger.html">📜 Master Ledger</a>
+        <a href="#" id="logoutBtn" class="logout">👋 System Logout</a>
+    </div>
+
+    <div class="main-content">
+
+        <div class="header">
+            <div>
+                <h1>Global Operations Command</h1>
+                <p style="color: #7f8c8d; font-size: 14px; margin-top: 5px;">Real-time health, registration statistics, and overall financial metrics.</p>
+            </div>
+            <div class="admin-badge">⚡ Root Administrator</div>
+        </div>
+
+        <div class="admin-cards">
+            <div class="card users-card">
+                <span class="card-title">Total Active Users</span>
+                <span class="card-value" id="totalUsers">Loading...</span>
+            </div>
+            <div class="card expense-card">
+                <span class="card-title">Global System Expenses</span>
+                <span class="card-value" id="globalExpenses">Loading...</span>
+            </div>
+            <div class="card system-card">
+                <span class="card-title">Database Records</span>
+                <span class="card-value" id="totalQueries">Loading...</span>
+            </div>
+        </div>
+
+        <div class="system-status-box">
+            <h3>🖥️ System Infrastructure Overview</h3>
+            <div class="log-item">
+                <span>Database Connection (`expense_tracker_db`)</span>
+                <span class="status-ok">● ONLINE (MySQL 3306)</span>
+            </div>
+            <div class="log-item">
+                <span>User Roles Security Filter</span>
+                <span class="status-ok">● ACTIVE (Strict-Mode)</span>
+            </div>
+            <div class="log-item">
+                <span>Budget History Sync Logs</span>
+                <span style="color: #7f8c8d;" id="lastSyncTime">Last updated: Just now</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Session Verification
+        const userId = localStorage.getItem("userId");
+        const role = localStorage.getItem("role");
+
+        // if (!userId || role !== "admin") {
+        //     alert("⚠️ Session expired or Unauthorized access! Redirecting to login...");
+        //     window.location.href = "index.html";
+        // }
+
+        // Logout Event Listener
+        document.getElementById("logoutBtn").addEventListener("click", (e) => {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = "index.html";
+        });
+
+        // Fetch Live Database Analytics from Backend Engine
+        async function fetchAdminDashboardData() {
+            try {
+                const response = await fetch('http://localhost:8080/api/admin-analytics', {
+                    method: 'GET'
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Analytics Data Received:", data);
+
+                if (data.status === "success") {
+                    document.getElementById("totalUsers").innerText = data.totalUsers;
+                    document.getElementById("globalExpenses").innerText = `₹${parseFloat(data.globalExpenses || 0).toFixed(2)}`;
+                    document.getElementById("totalQueries").innerText = data.totalQueries;
+                } else {
+                    console.error("❌ Analytics fetch returned error status.");
+                }
+            } catch (err) {
+                console.error("❌ Backend sync failure:", err);
+                document.getElementById("totalUsers").innerText = "Err";
+                document.getElementById("globalExpenses").innerText = "Err";
+                document.getElementById("totalQueries").innerText = "Err";
+            }
+
+            const now = new Date();
+            document.getElementById("lastSyncTime").innerText = "Last updated: " + now.toLocaleTimeString();
+        }
+
+        window.onload = fetchAdminDashboardData;
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Expense Tracker</title>
+    <style>
+        /* --- Reset & Base Styles --- */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        /* --- Navbar Styles --- */
+        
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .logo span {
+            color: #3498db;
+        }
+        /* --- Hero Container --- */
+        
+        .hero-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            margin-top: 60px;
+        }
+        /* --- Left Side: Text & Buttons --- */
+        
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .hero-text h1 {
+            font-size: 48px;
+            color: #2c3e50;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .hero-text h1 span {
+            color: #3498db;
+        }
+        
+        .hero-text p {
+            font-size: 18px;
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #2c3e50;
+            border: 2px solid #2c3e50;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #2c3e50;
+            color: white;
+            transform: translateY(-2px);
+        }
+        /* --- Right Side: Visual Element --- */
+        
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .visual-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border-top: 5px solid #3498db;
+        }
+        
+        .visual-card .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .visual-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .visual-card p {
+            color: #95a5a6;
+            font-size: 14px;
+        }
+        /* --- Responsive Design --- */
+        
+        @media (max-width: 768px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+                margin-top: 100px;
+            }
+            .hero-text h1 {
+                font-size: 36px;
+            }
+            .cta-buttons {
+                justify-content: center;
+            }
+            .hero-visual {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">💸 Wallet<span>Wise</span></div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-container">
+
+        <!-- Left Side content -->
+        <div class="hero-text">
+            <h1>Take Control of Your <span>Money</span>, Effortlessly.</h1>
+            <p>Track your daily expenses, set smart monthly budgets, and analyze your spending habits. Separate control panels for users and admins to keep data secure and organized.</p>
+
+            <div class="cta-buttons">
+                <!-- In links ko aap baad mein login aur register wale page se connect kar sakte hain -->
+                <a href="login.html" class="btn btn-primary">Sign In / Login</a>
+                <a href="register.html" class="btn btn-secondary">Create Account</a>
+            </div>
+        </div>
+
+        <!-- Right Side Visual Box -->
+        <div class="hero-visual">
+            <div class="visual-card">
+                <div class="icon">📈</div>
+                <h3>Smart Tracking</h3>
+                <p>Never wonder where your money went. Monitor your budget limits with live updates and dynamic data protection.</p>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
