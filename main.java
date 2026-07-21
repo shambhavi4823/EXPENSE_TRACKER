@@ -1,6 +1,10 @@
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
+import .history.ExpenseDAO;
+import .history.UserDAO;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -16,7 +20,13 @@ public class main {
 
    public static void main(String[] var0) {
       try {
-         HttpServer var1 = HttpServer.create(new InetSocketAddress(8080), 0);
+         int port = Integer.parseInt(
+    System.getenv().getOrDefault("PORT", "8080")
+);
+
+HttpServer var1 = HttpServer.create(
+    new InetSocketAddress(port), 0
+);
          
          // Binding Core Auth & User Paths
          var1.createContext("/api/register", new RegisterHandler());

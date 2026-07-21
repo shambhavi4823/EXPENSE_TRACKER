@@ -5,9 +5,9 @@ import java.sql.SQLException;
 public class DatabaseTest {
     // Ye 'public static' hona bahut zaroori hai
     public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/expense_tracker_db";
-        String user = "root";
-        String password = "shambhavisinha4823";
+        String url = System.getenv("DB_URL");
+        String username = System.getenv("DB_USER");
+        String password = System.getenv("DB_PASSWORD");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
