@@ -7,172 +7,361 @@
     <title>Expense Tracker</title>
     <style>
         /* --- Reset & Base Styles --- */
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
-        
+
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: #0f172a;
+            color: #f8fafc;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            position: relative;
+            overflow-x: hidden;
         }
+
+        /* Animated Ambient Background Glows */
+        .glow-bg {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 10s infinite alternate ease-in-out;
+        }
+
+        .glow-1 {
+            top: -100px;
+            left: -100px;
+            background: #3b82f6;
+        }
+
+        .glow-2 {
+            bottom: -100px;
+            right: -100px;
+            background: #8b5cf6;
+            animation-delay: -5s;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.25; }
+            50% { transform: scale(1.2) translate(30px, -20px); opacity: 0.45; }
+            100% { transform: scale(0.9) translate(-20px, 30px); opacity: 0.25; }
+        }
+
         /* --- Navbar Styles --- */
-        
         .navbar {
             width: 100%;
             max-width: 1200px;
-            padding: 20px;
+            padding: 24px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: absolute;
-            top: 0;
+            z-index: 10;
+            animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
+
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2c3e50;
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        
+
         .logo span {
-            color: #3498db;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
         /* --- Hero Container --- */
-        
         .hero-container {
             width: 100%;
             max-width: 1200px;
-            padding: 40px 20px;
+            padding: 60px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 50px;
-            margin-top: 60px;
+            gap: 60px;
+            z-index: 10;
+            margin: auto 0;
         }
+
         /* --- Left Side: Text & Buttons --- */
-        
         .hero-text {
             flex: 1;
             max-width: 600px;
+            animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
         }
-        
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: #38bdf8;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #38bdf8;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         .hero-text h1 {
-            font-size: 48px;
-            color: #2c3e50;
-            line-height: 1.2;
-            margin-bottom: 20px;
+            font-size: 54px;
+            font-weight: 800;
+            color: #f8fafc;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
         }
-        
+
         .hero-text h1 span {
-            color: #3498db;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        
+
         .hero-text p {
             font-size: 18px;
-            color: #7f8c8d;
+            color: #94a3b8;
             line-height: 1.6;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
+            font-weight: 400;
         }
-        
+
         .cta-buttons {
             display: flex;
-            gap: 20px;
+            gap: 18px;
         }
-        
+
         .btn {
-            padding: 14px 30px;
+            padding: 16px 32px;
             font-size: 16px;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-            text-align: center;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        
+
         .btn-primary {
-            background-color: #3498db;
+            background: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
             color: white;
             border: none;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.4);
         }
-        
+
         .btn-primary:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -5px rgba(2, 132, 199, 0.6);
         }
-        
+
         .btn-secondary {
-            background-color: transparent;
-            color: #2c3e50;
-            border: 2px solid #2c3e50;
+            background: rgba(255, 255, 255, 0.05);
+            color: #f8fafc;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
         }
-        
+
         .btn-secondary:hover {
-            background-color: #2c3e50;
-            color: white;
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
         }
+
         /* --- Right Side: Visual Element --- */
-        
         .hero-visual {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+            animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
         }
-        
+
         .visual-card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            background: rgba(30, 41, 59, 0.7);
+            padding: 44px 36px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
             width: 100%;
-            max-width: 400px;
-            border-top: 5px solid #3498db;
+            max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            position: relative;
+            transition: transform 0.4s ease, border-color 0.4s ease;
         }
-        
-        .visual-card .icon {
-            font-size: 60px;
-            margin-bottom: 15px;
+
+        .visual-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(56, 189, 248, 0.4);
         }
-        
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(129, 140, 248, 0.15) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
         .visual-card h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #f8fafc;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
         }
-        
+
         .visual-card p {
-            color: #95a5a6;
-            font-size: 14px;
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.6;
         }
+
+        /* Floating Micro-Badges on Card */
+        .floating-badge {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 10px 16px;
+            border-radius: 14px;
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .badge-1 {
+            top: -20px;
+            left: -20px;
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+
+        .badge-2 {
+            bottom: -20px;
+            right: -20px;
+            animation: floatSlow 5s ease-in-out infinite -2.5s;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .badge-stat {
+            color: #4ade80;
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* --- Responsive Design --- */
-        
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .hero-container {
                 flex-direction: column;
                 text-align: center;
-                margin-top: 100px;
+                gap: 50px;
+                padding-top: 40px;
             }
+
+            .hero-text {
+                max-width: 100%;
+            }
+
             .hero-text h1 {
-                font-size: 36px;
+                font-size: 40px;
             }
+
             .cta-buttons {
                 justify-content: center;
             }
-            .hero-visual {
-                width: 100%;
+
+            .visual-card {
+                max-width: 100%;
+            }
+
+            .badge-1 {
+                left: 10px;
+            }
+
+            .badge-2 {
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .hero-text h1 {
+                font-size: 32px;
             }
         }
     </style>
@@ -180,9 +369,15 @@
 
 <body>
 
+    <!-- Ambient Glow Backgrounds -->
+    <div class="glow-bg glow-1"></div>
+    <div class="glow-bg glow-2"></div>
+
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="logo">Expense<span>Tracker</span></div>
+        <div class="logo">
+            <span>💳</span> Expense<span>Tracker</span>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -190,22 +385,44 @@
 
         <!-- Left Side content -->
         <div class="hero-text">
+            <div class="badge">
+                <span class="badge-dot"></span>
+                <span>Smart Financial Management</span>
+            </div>
             <h1>Take Control of Your <span>Money</span>, Effortlessly.</h1>
-            <p>Track your daily expenses, set smart monthly budgets, and analyze your spending habits. Separate control panels for users and admins to keep data secure and organized.</p>
+            <p>Track your daily expenses, set smart monthly budgets, and analyze your spending habits with real-time analytics. Built with secure, separate access for users and admins.</p>
 
             <div class="cta-buttons">
-                <!-- In links ko aap baad mein login aur register wale page se connect kar sakte hain -->
-                <a href="login.html" class="btn btn-primary">Sign In / Login</a>
-                <a href="register.html" class="btn btn-secondary">Create Account</a>
+                <a href="login.html" class="btn btn-primary">
+                    Sign In / Login &rarr;
+                </a>
+                <a href="register.html" class="btn btn-secondary">
+                    Create Account
+                </a>
             </div>
         </div>
 
         <!-- Right Side Visual Box -->
         <div class="hero-visual">
             <div class="visual-card">
-                <div class="icon">📈</div>
-                <h3>Smart Tracking</h3>
-                <p>Never wonder where your money went. Monitor your budget limits with live updates and dynamic data protection.</p>
+                
+                <!-- Micro Floating Element Top-Left -->
+                <div class="floating-badge badge-1">
+                    <span>⚡ Real-time Sync</span>
+                </div>
+
+                <div class="icon-box">
+                    📈
+                </div>
+                <h3>Smart Analytics</h3>
+                <p>Never wonder where your money went. Monitor your spending limits with live insights and dynamic visual reports.</p>
+
+                <!-- Micro Floating Element Bottom-Right -->
+                <div class="floating-badge badge-2">
+                    <span>Budget Saved</span>
+                    <span class="badge-stat">+18.5%</span>
+                </div>
+
             </div>
         </div>
 
